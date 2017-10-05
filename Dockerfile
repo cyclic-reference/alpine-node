@@ -6,7 +6,7 @@ ENV VERSION=v4.4.4 NPM_VERSION=2
 # ENV VERSION=v8.6.0 NPM_VERSION=5 YARN_VERSION=latest
 
 # For base builds
-ENV CONFIG_FLAGS="--fully-static --without-npm" DEL_PKGS="libstdc++" RM_DIRS=/usr/include
+ENV CONFIG_FLAGS="--fully-static" DEL_PKGS="libstdc++" RM_DIRS=/usr/include
 
 RUN apk add --no-cache curl make gcc g++ python linux-headers binutils-gold gnupg libstdc++ && \
   gpg --keyserver ha.pool.sks-keyservers.net --recv-keys \
@@ -40,8 +40,4 @@ RUN apk add --no-cache curl make gcc g++ python linux-headers binutils-gold gnup
       ln -s /usr/local/share/yarn/bin/yarnpkg /usr/local/bin/ && \
       rm ${YARN_VERSION}.tar.gz*; \
     fi; \
-  fi && \
-  apk del curl make gcc g++ python linux-headers binutils-gold gnupg ${DEL_PKGS} && \
-  rm -rf ${RM_DIRS} /node-${VERSION}* /usr/share/man /tmp/* /var/cache/apk/* \
-    /root/.npm /root/.node-gyp /root/.gnupg /usr/lib/node_modules/npm/man \
-    /usr/lib/node_modules/npm/doc /usr/lib/node_modules/npm/html /usr/lib/node_modules/npm/scripts
+  fi;
